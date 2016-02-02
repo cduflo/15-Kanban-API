@@ -47,7 +47,7 @@ namespace Kanban_API.Controllers
 
         // PUT: api/Lists/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutList(int id, List list)
+        public IHttpActionResult PutList(int id, ListsModel list)
         {
             if (!ModelState.IsValid)
             {
@@ -58,8 +58,10 @@ namespace Kanban_API.Controllers
             {
                 return BadRequest();
             }
-
-            db.Entry(list).State = EntityState.Modified;
+            //
+            var dbList = db.Lists.Find(id);
+            dbList.Update(list);
+            db.Entry(dbList).State = EntityState.Modified;
 
             try
             {
@@ -81,7 +83,7 @@ namespace Kanban_API.Controllers
         }
 
         // POST: api/Lists
-        [ResponseType(typeof(List))]
+        [ResponseType(typeof(ListsModel))]
         public IHttpActionResult PostList(List list)
         {
             if (!ModelState.IsValid)
@@ -92,7 +94,7 @@ namespace Kanban_API.Controllers
             db.Lists.Add(list);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = list.ListID }, list);
+            return CreatedAtRoute("DefaultApi", new { id = list.ListID }, Mapper.Map<ListsModel>(list));
         }
 
         // DELETE: api/Lists/5

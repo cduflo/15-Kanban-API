@@ -26,7 +26,6 @@ namespace Kanban_API
         {
             ListID = model.ListID;
             Text = model.Text;
-            CreatedDate = DateTime.Now;
         }
     }
 }

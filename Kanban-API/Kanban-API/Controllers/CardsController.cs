@@ -39,7 +39,7 @@ public IEnumerable<CardsModel> GetCards()
 
         // PUT: api/Cards/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCard(int id, Card card)
+        public IHttpActionResult PutCard(int id, CardsModel card)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +51,10 @@ public IEnumerable<CardsModel> GetCards()
                 return BadRequest();
             }
 
-            db.Entry(card).State = EntityState.Modified;
+            var dbCard = db.Cards.Find(id);
+            dbCard.Update(card);
+
+            db.Entry(dbCard).State = EntityState.Modified;
 
             try
             {
@@ -73,7 +76,7 @@ public IEnumerable<CardsModel> GetCards()
         }
 
         // POST: api/Cards
-        [ResponseType(typeof(Card))]
+        [ResponseType(typeof(CardsModel))]
         public IHttpActionResult PostCard(Card card)
         {
             if (!ModelState.IsValid)
@@ -84,7 +87,7 @@ public IEnumerable<CardsModel> GetCards()
             db.Cards.Add(card);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = card.CardID }, card);
+            return CreatedAtRoute("DefaultApi", new { id = card.CardID }, Mapper.Map<CardsModel>(card));
         }
 
         // DELETE: api/Cards/5

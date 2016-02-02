@@ -31,7 +31,6 @@ namespace Kanban_API
         public void Update(ListsModel model)
         {
             Name = model.Name;
-            CreatedDate = DateTime.Now;
         }
     }
 }
