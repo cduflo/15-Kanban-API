@@ -25,7 +25,7 @@ namespace Kanban_API.Controllers
         }
 
         // GET: api/Lists/5
-        [ResponseType(typeof(List))]
+        [ResponseType(typeof(ListsModel))]
         public IHttpActionResult GetList(int id)
         {
             List list = db.Lists.Find(id);
@@ -34,7 +34,15 @@ namespace Kanban_API.Controllers
                 return NotFound();
             }
 
-            return Ok(list);
+            return Ok(Mapper.Map<ListsModel>(list));
+        }
+
+        // GET: api/Lists/5/Cards
+        [Route("api/lists/{listId}/cards")]
+        public IEnumerable<CardsModel> GetCardsForList(int listId)
+        {
+            var cards = db.Cards.Where(m => m.ListID == listId);
+            return Mapper.Map<IEnumerable<CardsModel>>(cards);
         }
 
         // PUT: api/Lists/5
@@ -88,7 +96,7 @@ namespace Kanban_API.Controllers
         }
 
         // DELETE: api/Lists/5
-        [ResponseType(typeof(List))]
+        [ResponseType(typeof(ListsModel))]
         public IHttpActionResult DeleteList(int id)
         {
             List list = db.Lists.Find(id);
@@ -97,10 +105,16 @@ namespace Kanban_API.Controllers
                 return NotFound();
             }
 
+            var cards = db.Cards.Where(u => u.ListID == list.ListID);
+            foreach (var u in cards)
+            {
+                db.Cards.Remove(u);
+            }
+
             db.Lists.Remove(list);
             db.SaveChanges();
 
-            return Ok(list);
+            return Ok(Mapper.Map<ListsModel>(list));
         }
 
         protected override void Dispose(bool disposing)

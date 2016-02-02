@@ -25,7 +25,7 @@ public IEnumerable<CardsModel> GetCards()
         }
 
         // GET: api/Cards/5
-        [ResponseType(typeof(Card))]
+        [ResponseType(typeof(CardsModel))]
         public IHttpActionResult GetCard(int id)
         {
             Card card = db.Cards.Find(id);
@@ -34,7 +34,7 @@ public IEnumerable<CardsModel> GetCards()
                 return NotFound();
             }
 
-            return Ok(card);
+            return Ok(Mapper.Map<CardsModel>(card));
         }
 
         // PUT: api/Cards/5
@@ -88,7 +88,7 @@ public IEnumerable<CardsModel> GetCards()
         }
 
         // DELETE: api/Cards/5
-        [ResponseType(typeof(Card))]
+        [ResponseType(typeof(CardsModel))]
         public IHttpActionResult DeleteCard(int id)
         {
             Card card = db.Cards.Find(id);
@@ -100,7 +100,7 @@ public IEnumerable<CardsModel> GetCards()
             db.Cards.Remove(card);
             db.SaveChanges();
 
-            return Ok(card);
+            return Ok(Mapper.Map<CardsModel>(card));
         }
 
         protected override void Dispose(bool disposing)
