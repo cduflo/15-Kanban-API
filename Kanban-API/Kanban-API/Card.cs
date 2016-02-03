@@ -27,5 +27,14 @@ namespace Kanban_API
             ListID = model.ListID;
             Text = model.Text;
         }
+
+        public Card(CardsModel model)
+        {
+            this.Update(model);
+            CreatedDate = DateTime.Now;
+        }
+
+        public Card()
+        { }
     }
 }

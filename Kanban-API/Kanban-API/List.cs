@@ -32,5 +32,11 @@ namespace Kanban_API
         {
             Name = model.Name;
         }
+
+        public List(ListsModel model)
+        {
+            this.Update(model);
+            CreatedDate = DateTime.Now;
+        }
     }
 }

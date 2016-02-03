@@ -84,17 +84,22 @@ namespace Kanban_API.Controllers
 
         // POST: api/Lists
         [ResponseType(typeof(ListsModel))]
-        public IHttpActionResult PostList(List list)
+        public IHttpActionResult PostList(ListsModel list)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Lists.Add(list);
+            var addlist = new List(list);
+
+            db.Lists.Add(addlist);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = list.ListID }, Mapper.Map<ListsModel>(list));
+            list.ListID = addlist.ListID;
+            list.CreatedDate = addlist.CreatedDate;
+
+            return CreatedAtRoute("DefaultApi", new { id = list.ListID }, list);
         }
 
         // DELETE: api/Lists/5

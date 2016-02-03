@@ -77,17 +77,22 @@ public IEnumerable<CardsModel> GetCards()
 
         // POST: api/Cards
         [ResponseType(typeof(CardsModel))]
-        public IHttpActionResult PostCard(Card card)
+        public IHttpActionResult PostCard(CardsModel card)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Cards.Add(card);
+            var addcard = new Card(card);
+
+            db.Cards.Add(addcard);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = card.CardID }, Mapper.Map<CardsModel>(card));
+            card.CardID = addcard.CardID;
+            card.CreatedDate = addcard.CreatedDate;
+
+            return CreatedAtRoute("DefaultApi", new { id = addcard.CardID }, card);
         }
 
         // DELETE: api/Cards/5
