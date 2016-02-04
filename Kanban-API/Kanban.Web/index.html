@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html ng-app="kanban">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body style="background-color:cornflowerblue;" ng-controller="IndexController">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Kanban</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <pre>{{lists | json}} </pre>
+
+        <div class="row">
+            <div class="col-sx-12 col-sm-6 col-md-4">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="newList.Name" placeholder="Add List..." />
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" ng-click="addList()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

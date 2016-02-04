@@ -32,3 +32,6 @@ C:\dev\OneDrive\origin\15-Kanban-API\Kanban-API\Kanban-API\obj\Debug\Kanban-API.
 C:\dev\OneDrive\origin\15-Kanban-API\Kanban-API\Kanban-API\obj\Debug\Kanban-API.pdb
 C:\dev\OneDrive\origin\15-Kanban-API\Kanban-API\Kanban-API\bin\AutoMapper.dll
 C:\dev\OneDrive\origin\15-Kanban-API\Kanban-API\Kanban-API\bin\AutoMapper.xml
+C:\dev\OneDrive\origin\15-Kanban-API\Kanban-API\Kanban-API\bin\System.Web.Cors.dll
+C:\dev\OneDrive\origin\15-Kanban-API\Kanban-API\Kanban-API\bin\System.Web.Http.Cors.dll
+C:\dev\OneDrive\origin\15-Kanban-API\Kanban-API\Kanban-API\bin\System.Web.Http.Cors.xml
