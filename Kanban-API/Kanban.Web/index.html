@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="StyleSheet.css" rel="stylesheet" />
 </head>
 <body style="background-color:cornflowerblue;" ng-controller="IndexController">
 
@@ -19,7 +20,7 @@
     <div class="container-fluid">
         <pre>{{lists | json}} </pre>
 
-        <div class="row">
+        <div class="row customClass <!--dragscroll-->">
             <div class="col-sx-12 col-sm-6 col-md-4" ng-repeat="list in lists">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -36,9 +37,9 @@
                             </button>
                         </div>
                         <div class="input-group">
-                            <input type="text" class="form-control"  ng-model="newCard.Text" placeholder="Add Card..." />
+                            <input name ="hi" id="hi" type="text" class="form-control" ng-model="list.newCard.Text" placeholder="Add Card..." />
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="addCard(list)">
+                                <button class="btn btn-default" type="button" ng-click="addCard(list, $parent.$index)">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </span>
@@ -46,9 +47,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-sx-12 col-sm-6 col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -64,6 +62,23 @@
                 </div>
             </div>
         </div>
+
+        <!--<div class="row customClass">
+            <div class="col-sx-12 col-sm-6 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="newList.Name" placeholder="Add List..." />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="addList()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
     </div>
 
 
@@ -73,5 +88,6 @@
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="js/app.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
 </body>
 </html>

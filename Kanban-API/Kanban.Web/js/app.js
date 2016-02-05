@@ -9,6 +9,8 @@ angular.module('kanban').controller('IndexController', function ($scope, $resour
         }
     });
 
+    var CardResource = $resource(apiUrl + '/cards/:cardID', { listID: '@cardID' });
+
     function activate() {
         ListResource.query(function (data) {
             $scope.lists = data;
@@ -30,25 +32,40 @@ angular.module('kanban').controller('IndexController', function ($scope, $resour
         });
     };
 
-    $scope.addCard = function () {
-        ListResource.save($scope.newList, function () {
+    $scope.addCard = function (x,y) {
+        $scope.newCard.ListID = x.ListID;
+        $scope.newCard.Text = newCard[y].Text;
+        CardResource.save($scope.newCard, function () {
             alert('save successful');
             activate();
         });
     };
 
     $scope.delList = function (list) {
-        list.$delete(function(){
+        list.$remove(function(){
             activate();
         })
     };
 
     $scope.delCard = function (card) {
-        ListResource.delete(card.cardID, function () {
+        CardResource.remove(card.cardID, function () {
             alert('delete successful');
             activate();
         })
     };
 
     activate();
+
+    var curYPos = 0,
+    curXPos = 0,
+    curDown = false;
+
+    //window.addEventListener('mousemove', function (e) {
+    //    if (curDown === true) {
+    //        window.scrollTo(document.body.scrollLeft + (curXPos - e.pageX), document.body.scrollTop + (curYPos - e.pageY));
+    //    }
+    //});
+
+    //window.addEventListener('mousedown', function (e) { curDown = true; curYPos = e.pageY; curXPos = e.pageX; });
+    //window.addEventListener('mouseup', function (e) { curDown = false; });
 });
