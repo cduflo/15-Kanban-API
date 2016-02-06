@@ -18,16 +18,28 @@
     </nav>
 
     <div class="container-fluid">
-        <pre>{{lists | json}} </pre>
+        <!--<pre>{{data.lists | json}} </pre>-->
 
         <div class="row customClass <!--dragscroll-->">
-            <div class="col-sx-12 col-sm-6 col-md-4" ng-repeat="list in lists">
+            <div class="col-sx-12 col-sm-6 col-md-4" ng-repeat="list in data.lists">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{list.Name}}
-                        <button class="btn btn-default" type="button" ng-click="delList(list)" style="float:right; margin-top:-7px;">
-                            <i class="fa fa-times" style="color:red;"></i>
-                        </button>
+                        <div ng-show="list.Edit">
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="list.Name" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" ng-click="saveList(list)"><i class="fa fa-save"></i></button>
+                                    <button class="btn btn-default" ng-click="list.Edit=false"><i class="fa fa-step-backward"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div ng-hide="list.Edit">
+                            <span ng-click="list.Edit = true">{{list.Name}}</span>
+                            <button class="btn btn-default" type="button" ng-click="delList(list)" style="float:right; margin-top:-7px;">
+                                <i class="fa fa-times" style="color:red;"></i>
+                            </button>
+                        </div>
+
                     </div>
                     <div class="panel-body">
                         <div class="well" ng-repeat="card in list.cards">
@@ -37,9 +49,9 @@
                             </button>
                         </div>
                         <div class="input-group">
-                            <input name ="hi" id="hi" type="text" class="form-control" ng-model="list.newCard.Text" placeholder="Add Card..." />
+                            <input type="text" class="form-control" ng-model="list.newCard.Text" placeholder="Add Card..." />
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="addCard(list, $parent.$index)">
+                                <button class="btn btn-default" type="button" ng-click="addCard(list)">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </span>
@@ -51,7 +63,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="newList.Name" placeholder="Add List..." />
+                            <input type="text" class="form-control" ng-model="data.newList.Name" placeholder="Add List..." />
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="addList()">
                                     <i class="fa fa-plus"></i>

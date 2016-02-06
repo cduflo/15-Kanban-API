@@ -1,64 +1,71 @@
 ﻿angular.module('kanban', ['ngResource']);
 angular.module('kanban').value('apiUrl', 'http://localhost:52972/api');
-angular.module('kanban').controller('IndexController', function ($scope, $resource ,apiUrl) {
-    var ListResource = $resource(apiUrl + '/lists/:listID', { listID: '@listID' }, {
+angular.module('kanban').controller('IndexController', function ($scope, $resource, apiUrl) {
+    var CardsResource = $resource(apiUrl + '/cards/:CardID', { CardID: '@CardID' }, {
         'cards': {
-            url: apiUrl + '/lists/:listID/cards',
             method: 'GET',
+            url: apiUrl + '/lists/:ListID/cards',
             isArray: true,
         }
     });
 
-    var CardResource = $resource(apiUrl + '/cards/:cardID', { listID: '@cardID' });
-
-    function activate() {
-        ListResource.query(function (data) {
-            $scope.lists = data;
-
-            $scope.lists.forEach(function (list) {
-                list.cards = ListResource.cards({ listID: list.ListID });
-            });
+    var ListResource = $resource(apiUrl + '/lists/:ListID', { ListID: '@ListID' }, 
+        {
+            'update': { method: 'PUT' }
         });
+
+    $scope.data = {
+        newList: {},
+        newCard: {}
     }
- 
-    $scope.newList = {};
-    $scope.newCard = {};
-    //$scope.dCard = {};
 
     $scope.addList = function () {
-        ListResource.save($scope.newList, function () {
-            alert('save successful');
+        ListResource.save($scope.data.newList, function (data) {
+            $scope.data.newList = {};
             activate();
         });
     };
 
-    $scope.addCard = function (x,y) {
-        $scope.newCard.ListID = x.ListID;
-        $scope.newCard.Text = newCard[y].Text;
-        CardResource.save($scope.newCard, function () {
-            alert('save successful');
+    $scope.addCard = function (list) {
+        list.newCard.ListID = list.ListID;
+        CardsResource.save(list.newCard, function (data) {
             activate();
         });
     };
 
     $scope.delList = function (list) {
-        list.$remove(function(){
+        list.$remove(function (data) {
             activate();
-        })
+        });
     };
 
     $scope.delCard = function (card) {
-        CardResource.remove(card.cardID, function () {
-            alert('delete successful');
+        card.$remove(function (data) {
             activate();
-        })
+        });
     };
+
+    $scope.saveList = function (list) {
+        list.$update(function () {
+            activate();
+        });
+    };
+
+    function activate() {
+        ListResource.query(function (data) {
+            $scope.data.lists = data;
+
+            $scope.data.lists.forEach(function (list) {
+                list.cards = CardsResource.cards({ ListID: list.ListID });
+            });
+        });
+    }
 
     activate();
 
-    var curYPos = 0,
-    curXPos = 0,
-    curDown = false;
+    //var curYPos = 0,
+    //curXPos = 0,
+    //curDown = false;
 
     //window.addEventListener('mousemove', function (e) {
     //    if (curDown === true) {

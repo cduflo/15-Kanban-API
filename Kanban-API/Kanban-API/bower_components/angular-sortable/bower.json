@@ -1,0 +1,28 @@
+{
+  "name": "viewy-view",
+  "version": "0.5.0",
+  "homepage": "https://github.com/viewy/viewy-view",
+  "authors": [
+    "Viewy Organization and Contributors"
+  ],
+  "description": "JavaScript utility for client-side web application user interface development.",
+  "main": "src/view.js",
+  "keywords": [
+    "viewy",
+    "view"
+  ],
+  "ignore": [
+    "/*",
+    "!LICENSE",
+    "!src/*",
+    "!release/*"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.9",
+    "requirejs-domready": "~2.0.1",
+    "requirejs-text": "~2.0.10",
+    "require-css": "~0.1.2",
+    "jquery": "~2.0.3"
+  },
+  "license": "MIT"
+}
