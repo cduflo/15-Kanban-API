@@ -19,10 +19,9 @@
 
     <div class="container-fluid">
         <!--<pre>{{data.lists | json}} </pre>-->
-
-        <div class="row customClass <!--dragscroll-->">
-            <div class="col-sx-12 col-sm-6 col-md-4" ng-repeat="list in data.lists">
-                <div class="panel panel-default">
+        <div class="row customClass dragscroll" >
+            <div class="col-sx-12 col-sm-6 col-md-4" ng-repeat="list in data.lists" >
+                <div class="panel panel-default" >
                     <div class="panel-heading">
                         <div ng-show="list.Edit">
                             <div class="input-group">
@@ -41,12 +40,23 @@
                         </div>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" >
                         <div class="well" ng-repeat="card in list.cards">
-                            {{card.Text}}
-                            <button class="btn btn-danger" type="button" ng-click="delCard(card)" style="float:right; margin-top:-7px;">
-                                <i class="fa fa-times"></i>
-                            </button>
+                            <div ng-show="card.Edit">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="card.Text" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" ng-click="saveCard(card)"><i class="fa fa-save"></i></button>
+                                        <button class="btn btn-default" ng-click="card.Edit=false"><i class="fa fa-step-backward"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div ng-hide="card.Edit">
+                                <span ng-click="card.Edit = true">{{card.Text}}</span>
+                                <button class="btn btn-danger" type="button" ng-click="delCard(card)" style="float:right; margin-top:-7px;">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" ng-model="list.newCard.Text" placeholder="Add Card..." />
@@ -74,23 +84,6 @@
                 </div>
             </div>
         </div>
-
-        <!--<div class="row customClass">
-            <div class="col-sx-12 col-sm-6 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="input-group">
-                            <input type="text" class="form-control" ng-model="newList.Name" placeholder="Add List..." />
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="addList()">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
     </div>
 
 
@@ -99,7 +92,8 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="js/app.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="bower_components/angular-sortable-view/src/angular-sortable-view.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

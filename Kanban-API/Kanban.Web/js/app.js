@@ -1,11 +1,11 @@
-﻿angular.module('kanban', ['ngResource']);
+﻿angular.module('kanban', ['ngResource','angular-sortable-view']);
 angular.module('kanban').value('apiUrl', 'http://localhost:52972/api');
 angular.module('kanban').controller('IndexController', function ($scope, $resource, apiUrl) {
     var CardsResource = $resource(apiUrl + '/cards/:CardID', { CardID: '@CardID' }, {
         'cards': {
             method: 'GET',
             url: apiUrl + '/lists/:ListID/cards',
-            isArray: true,
+            isArray: true
         }
     });
 
@@ -13,6 +13,11 @@ angular.module('kanban').controller('IndexController', function ($scope, $resour
         {
             'update': { method: 'PUT' }
         });
+
+    var CResource = $resource(apiUrl + '/cards/:CardID', {CardID: '@CardID'}, 
+    {
+        'update': { method: 'PUT' }
+    });
 
     $scope.data = {
         newList: {},
@@ -51,6 +56,12 @@ angular.module('kanban').controller('IndexController', function ($scope, $resour
         });
     };
 
+    $scope.saveCard = function (card) {
+    CResource.update(card, function (data) {
+            activate();
+        });
+    };
+
     function activate() {
         ListResource.query(function (data) {
             $scope.data.lists = data;
@@ -63,16 +74,16 @@ angular.module('kanban').controller('IndexController', function ($scope, $resour
 
     activate();
 
-    //var curYPos = 0,
-    //curXPos = 0,
-    //curDown = false;
+    var curYPos = 0,
+    curXPos = 0,
+    curDown = false;
 
-    //window.addEventListener('mousemove', function (e) {
-    //    if (curDown === true) {
-    //        window.scrollTo(document.body.scrollLeft + (curXPos - e.pageX), document.body.scrollTop + (curYPos - e.pageY));
-    //    }
-    //});
+    window.addEventListener('mousemove', function (e) {
+        if (curDown === true) {
+            window.scrollTo(document.body.scrollLeft + (curXPos - e.pageX), document.body.scrollTop + (curYPos - e.pageY));
+        }
+    });
 
-    //window.addEventListener('mousedown', function (e) { curDown = true; curYPos = e.pageY; curXPos = e.pageX; });
-    //window.addEventListener('mouseup', function (e) { curDown = false; });
+    window.addEventListener('mousedown', function (e) { curDown = true; curYPos = e.pageY; curXPos = e.pageX; });
+    window.addEventListener('mouseup', function (e) { curDown = false; });
 });
