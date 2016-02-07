@@ -1,9 +1,11 @@
 ﻿body {
-    /*background-image: url("http://archwall.xyz/wp-content/uploads/2015/09/bridges-ocean-bridge-pier-sky-san-diego-coast-nature-clouds-sea-california-beach-wharf-picture-gallery.jpg");*/
+    background-image: url("http://archwall.xyz/wp-content/uploads/2015/09/bridges-ocean-bridge-pier-sky-san-diego-coast-nature-clouds-sea-california-beach-wharf-picture-gallery.jpg");
+    overflow-x: hidden;
 }
 
 div.row.customClass {
    overflow-x: auto;
+     /*overflow-x: hidden;*/
    white-space: nowrap;
  }
 
